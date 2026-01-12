@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Moon, Sun } from "lucide-react";
 const navItems = [
     {name: "Home", href:"#hero"},
     {name: "About", href:"#about"},
@@ -12,12 +12,21 @@ const navItems = [
 export const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isDarkMode, setIsDarkMode] = useState(true);
 
     useEffect(() => {
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 10);
         };
         window.addEventListener("scroll", handleScroll);
+        
+        const storedTheme = localStorage.getItem("theme");
+        if (storedTheme === "dark") {
+            setIsDarkMode(true);
+        } else {
+            setIsDarkMode(false);
+        }
+        
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
     return (
@@ -75,6 +84,27 @@ export const Navbar = () => {
                             </a>
                         ))}
                     </div>
+                    <button 
+                        onClick={() => {
+                            if(isDarkMode) {
+                                document.documentElement.classList.remove("dark");
+                                localStorage.setItem("theme", "light");
+                                setIsDarkMode(false);
+                            } else {
+                                document.documentElement.classList.add("dark");
+                                localStorage.setItem("theme", "dark");
+                                setIsDarkMode(true);
+                            }
+                        }}
+                        className="mt-8 p-3 rounded-full bg-primary/10 hover:bg-primary/20 transition-colors"
+                        aria-label="Toggle theme"
+                    >
+                        {isDarkMode ? (
+                            <Sun className="h-6 w-6 text-yellow-300"/>
+                        ) : (
+                            <Moon className="h-6 w-6 text-blue-900" />
+                        )}
+                    </button>
                 </div>
             </div>
         </nav>
