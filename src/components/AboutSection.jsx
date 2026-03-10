@@ -1,5 +1,5 @@
 import { Code, User, Briefcase } from "lucide-react";
-import profileImg from "@/assets/profile.jpg";
+import profileImg from "@/assets/profile.png";
 import resumePdf from "@/assets/Vanshaj_Resume.pdf";
 
 export const AboutSection = () => {
